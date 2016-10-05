@@ -1,0 +1,25 @@
+export(AsympDiscSurv,
+       LongToSurv,
+       PrenticeGloeckler.test,
+       SampleSizeDiscSurv,
+       simexlme,
+       rowMSD)
+
+S3method(print, SSDS)
+S3method(print, PrenticeGloeckler.test)
+
+importFrom("stats", "coef", "cov", "cov2cor", "lm", "nlm", "pnorm",
+           "predict", "qnorm", "resid", "rnorm", "update","as.formula",
+           "rbinom","rmultinom","var","nls")
+
+importFrom("MASS","ginv")
+
+importFrom("cubature","adaptIntegrate")
+
+importFrom("mvtnorm","pmvnorm","rmvnorm","dmvnorm")
+
+importFrom("nlme","lme","corCompSymm")
+
+importFrom("simex","simex","diag.block")
+
+importFrom("survival","coxph")
