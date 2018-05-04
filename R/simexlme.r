@@ -97,7 +97,7 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
             call. = FALSE)
     fitting.method <- "quad"
   }
-  if (jackknife.estimation != FALSE)
+  if (jackknife.estimation[1] != FALSE)
     jackknife.estimation <- substr(jackknife.estimation,
                                    1, 4)
   if (!any(jackknife.estimation == c("quad", "line", "nonl",
@@ -106,7 +106,7 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
             call. = FALSE)
     jackknife.estimation <- "quad"
   }
-  if (!is.character(SIMEXvariable))
+  if (!is.character(SIMEXvariable[1]))
     stop("SIMEXvariable must be character", call. = FALSE)
   if (any(lambda <= 0)) {
     warning("lambda should not contain 0 or negative values. 0 or negative values will be ignored",
@@ -150,11 +150,11 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
   theta <- matrix(data = NA, B, ncoef)
   colnames(theta) <- p.names
   theta.all <- vector(mode = "list", nlambda)
-  if (jackknife.estimation != FALSE) {
+  if (jackknife.estimation[1] != FALSE) {
     var.exp <- list()
     var.exp[[1]] <- extract.covmat(model)
   }
-  if (asymptotic) {
+  if (asymptotic[1]) {
     psi <- matrix(rep(0, ndes * ncoef), ncol = ncoef, nrow = ndes)
     psi <- resid(model, type = "response") * model$x
     PSI <- psi
@@ -173,9 +173,9 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
   }
   estimates[1, ] <- model$coefficients$fixed
   for (i in 1:length(lambda)) {
-    if (jackknife.estimation != FALSE)
+    if (jackknife.estimation[1] != FALSE)
       variance.est <- matrix(0, ncol = ncoef, nrow = ncoef)
-    if (asymptotic) {
+    if (asymptotic[1]) {
       psi <- matrix(0, ncol = ncoef, nrow = ndes)
       a <- list()
       for (k in 1:ndes) a[[k]] <- matrix(0, nrow = ncoef,
@@ -193,10 +193,10 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
       model.SIMEX <- update(model, correlation = corCompSymm(varb/(varb+varpb),
                                                              form = as.formula(corform), fixed = T), data = data.frame(SIMEXdata))
       theta[j, ] <- model.SIMEX$coefficients$fixed
-      if (jackknife.estimation != FALSE) {
+      if (jackknife.estimation[1] != FALSE) {
         variance.est <- variance.est + extract.covmat(model.SIMEX)
       }
-      if (asymptotic) {
+      if (asymptotic[1]) {
         xi <- model.SIMEX$x
         psi <- psi + (resid(model.SIMEX, type = "response") *
                         xi)
@@ -209,12 +209,12 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
     }
     estimates[i + 1, ] <- colMeans(theta)
     theta.all[[i]] <- theta
-    if (jackknife.estimation != FALSE) {
+    if (jackknife.estimation[1] != FALSE) {
       variance.est <- variance.est/B
       s2 <- cov(theta)
       var.exp[[i + 1]] <- variance.est - s2
     }
-    if (asymptotic) {
+    if (asymptotic[1]) {
       xiB <- psi/B
       PSI <- cbind(PSI, xiB)
       a.mat <- matrix(unlist(a), nrow = length(a), byrow = TRUE)
@@ -230,13 +230,13 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
                                                       lambda + I(lambda^2)), `line` = extrapolation <- lm(estimates ~
                                                                                                              lambda), nonl = extrapolation <- fitnls(lambda, p.names,
                                                                                                                                                       estimates))
-  if (fitting.method == "nonl") {
+  if (fitting.method[1] == "nonl") {
     for (i in 1:length(p.names)) SIMEX.estimate[i] <- predict(extrapolation[[p.names[i]]],
                                                               newdata = data.frame(lambda = -1))
   }  else {
     SIMEX.estimate <- predict(extrapolation, newdata = data.frame(lambda = -1))
   }
-  if (jackknife.estimation != FALSE) {
+  if (jackknife.estimation[1] != FALSE) {
     variance.jackknife <- matrix(unlist(var.exp), ncol = ncoef^2,
                                  byrow = TRUE)
     switch(jackknife.estimation, quad = extrapolation.variance <- lm(variance.jackknife ~
@@ -254,7 +254,7 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
                                  nrow = ncoef, ncol = ncoef, byrow = TRUE)
     dimnames(variance.jackknife) <- list(p.names, p.names)
   }
-  if (asymptotic) {
+  if (asymptotic[1]) {
     c11 <- cov(PSI)
     a11 <- diag.block(am)
     a11.inv <- solve(a11)
@@ -294,12 +294,12 @@ simexlme= function (model, model.model, SIMEXvariable, respvar,grpvar,corform,me
 #  }  else {
 #    erg$residuals <- model.model[, 1] - fitted.values
 #  }
-  if (jackknife.estimation != FALSE) {
+  if (jackknife.estimation[1] != FALSE) {
     erg$extrapolation.variance <- extrapolation.variance
     erg$variance.jackknife <- variance.jackknife
     erg$variance.jackknife.lambda <- variance.jackknife.lambda
   }
-  if (asymptotic) {
+  if (asymptotic[1]) {
     erg$PSI <- PSI
     erg$c11 <- c11
     erg$a11 <- a11

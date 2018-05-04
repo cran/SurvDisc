@@ -1,7 +1,7 @@
 Package: SurvDisc
 Type: Package
 Title: Discrete Time Survival and Longitudinal Data Analysis
-Version: 0.1.0
+Version: 0.1.1
 Depends: R(>= 2.10.0)
 Imports: cubature, mvtnorm, MASS, nlme, simex, survival
 Authors@R: c(person("John", "Lawrence", email = "john.lawrence@fda.hhs.gov",role = c("aut", "cre")),
@@ -16,10 +16,10 @@ Description: Various functions for discrete time survival analysis and longitudi
 License: GPL-2
 LazyData: TRUE
 NeedsCompilation: no
-Packaged: 2016-10-04 15:42:16 UTC; LAWRENCEJ
+Packaged: 2018-05-04 20:10:14 UTC; LAWRENCEJ
 Author: John Lawrence [aut, cre],
   Jianjin Xu [ctb],
   Sue Jane Wang [ctb],
   Jim Hung [ctb]
 Repository: CRAN
-Date/Publication: 2016-10-05 09:29:48
+Date/Publication: 2018-05-04 20:25:09 UTC

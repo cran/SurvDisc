@@ -13,18 +13,18 @@ LongToSurv=function(M,V,L,U,time,p0f,p1f=NULL,method=c("simulation","asymptotic"
   #the covariates included in the model are truncated multivariate normal with mean M, covariance V,
   #lower truncation vector L, and upper truncation vector U
 
-  if (substr(conf.type,1,1)=="n") conf.type="none" else if (substr(conf.type,1,1)=="u")
+  if (substr(conf.type[1],1,1)=="n") conf.type="none" else if (substr(conf.type[1],1,1)=="u")
     conf.type="unscheduled" else  conf.type="scheduled"
 
-    if (conf.type=="scheduled") {
+    if (conf.type[1]=="scheduled") {
       ltm1=length(time)-1
       acc.rate=as.numeric(pmvnorm(L,U,M,sigma=V)) #acceptance rate
 
-      if (substr(method,1,1)=="s") {
+      if (substr(method[1],1,1)=="s") {
         x=rmvnorm(ceiling(nsim/acc.rate),M,sigma=V)
         x=x[colSums(apply(x,1,function(x) x>L & x<U))==length(L),]
         n=nrow(x)
-        if (is.null(p1f)) {
+        if (any(is.null(p1f))) {
           S0fss = function (x,t,p0f,ltm1) {
             #this function calculates the survival curve for a fixed value of the covariate vector x
             p0=p0f(x,t)
@@ -66,7 +66,7 @@ LongToSurv=function(M,V,L,U,time,p0f,p1f=NULL,method=c("simulation","asymptotic"
         #the integration is done after the covariates are transformed to lie in a subset of the unit hypercube by using the probit transformation
         L2=pnorm((L-M)/sdV)
         U2=pnorm((U-M)/sdV)
-        if (is.null(p1f)) {
+        if (any(is.null(p1f))) {
           S0fsa = function (u,t,M,corV,sdV,p0f,ltm1) {
             #this function calculates the survival curves for a fixed value of the coordinatewise probit-transformed covariate vector u.
             v=qnorm(u)
@@ -112,11 +112,11 @@ LongToSurv=function(M,V,L,U,time,p0f,p1f=NULL,method=c("simulation","asymptotic"
       {
         ltm=length(time)
         acc.rate=as.numeric(pmvnorm(L,U,M,sigma=V)) #acceptance rate
-        if (substr(method,1,1)=="s") {
+        if (substr(method[1],1,1)=="s") {
           x=rmvnorm(ceiling(nsim/acc.rate),M,sigma=V)
           x=x[colSums(apply(x,1,function(x) x>L & x<U))==length(L),]
           n=nrow(x)
-          if (is.null(p1f)) {
+          if (any(is.null(p1f))) {
             S0fns = function (x,t,p0f,ltm) {
               #this function calculates the survival curve for a fixed value of the covariate vector x
               p0=p0f(x,t)
@@ -152,7 +152,7 @@ LongToSurv=function(M,V,L,U,time,p0f,p1f=NULL,method=c("simulation","asymptotic"
           #the integration is done after the covariates are transformed to lie in a subset of the unit hypercube by using the probit transformation
           L2=pnorm((L-M)/sdV)
           U2=pnorm((U-M)/sdV)
-          if (is.null(p1f)) {
+          if (any(is.null(p1f))) {
             S0fna = function (u,t,M,corV,sdV,p0f,ltm) {
               #this function calculates the survival curves for a fixed value of the coordinatewise probit-transformed covariate vector u.
               v=qnorm(u)

@@ -4,7 +4,7 @@ AsympDiscSurv <- function(h0,h1,p0,p1,method=c("efron","breslow","PrenticeGloeck
   beta1=mean(h1/h0)
   beta0=beta1-1
   grad=1
-  if (!is.element(substr(method,1,1),c("b","P"))) {
+  if (!is.element(substr(method[1],1,1),c("b","P"))) {
     while (abs(grad)>tol) {
       beta0=beta1
       theta=exp(beta0)
@@ -26,7 +26,7 @@ AsympDiscSurv <- function(h0,h1,p0,p1,method=c("efron","breslow","PrenticeGloeck
         grad=grad-h1[i]*p1[i]+est1*(h1[i]*p1[i]+h0[i]*p0[i])
         hess=hess+est2*(h1[i]*p1[i]+h0[i]*p0[i])}
       beta1=beta0-grad/hess}
-    varn=1/hess} else if (substr(method,1,1)=="b") {
+    varn=1/hess} else if (substr(method[1],1,1)=="b") {
       d1=p1*h1
       d0=p0*h0
       while (abs(grad)>tol) {

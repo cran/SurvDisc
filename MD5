@@ -1,11 +1,11 @@
-3b478055d851a1cada25c14bce1fe466 *DESCRIPTION
+97c92954b1e8c27d3a008b6ed6ab6eff *DESCRIPTION
 4a59152bd0a80257fd07730f7003a419 *NAMESPACE
-338cdc38f80845e9ca0ee2e7024062fe *R/AsympDiscSurv.R
-8b730fa3e7f881d5c1c24b15d975f8cf *R/LongToSurv.r
+a256595abbc9af5246823a9c73db6c39 *R/AsympDiscSurv.R
+f1ccbffbe5711915c872fded6a5156b7 *R/LongToSurv.r
 9b5db32ee9e2bd095535bf7bec43e5eb *R/PrenticeGloeckler.r
-6ca599f1515cbb312780dbfc22a33101 *R/SampleSizeDiscSurv.R
+4ceaffc34ae33f45674bee765ef184c7 *R/SampleSizeDiscSurv.R
 8bcf9942d4f4f678d9c4b14683fb1c88 *R/rowMSD.r
-8698ff6ac121f92b274c02820d5729d3 *R/simexlme.r
+9141f503e8428dc84761dcecea220b23 *R/simexlme.r
 f615c9260f1b95b5b061c0e8ad98ef6f *data/TKVsurv.rda
 e464291645da9480874ebeacc2061edb *data/datalist
 6494029759901fd35c730a94651f21b0 *data/simGFRdata.rda
